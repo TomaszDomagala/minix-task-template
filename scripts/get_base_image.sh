@@ -1,5 +1,11 @@
 #! /bin/bash
 
+# Source: https://stackoverflow.com/a/24597941
+function fail {
+    printf '%s\n' "$1" >&2  # Send message to stderr.
+    exit "${2-1}"  # Return a code specified by $2 or 1 by default.
+}
+
 # Read config file.
 . .config
 
@@ -9,20 +15,13 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 host="students.mimuw.edu.pl"
 path="/home/students/inf/PUBLIC/SO/scenariusze/4/minix.img.xz"
 
-# https://stackoverflow.com/a/24597941
-function fail {
-    printf '%s\n' "$1" >&2  ## Send message to stderr.
-    exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
-}
-
 
 commands=("unxz" "scp")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
 then
-    echo "${c} could not be found"
-    exit 1
+    fail "${c} could not be found"
 fi
 done
 
