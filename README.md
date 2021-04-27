@@ -18,4 +18,4 @@ If you don't have a ssh key, you may need to generate it using ssh-keygen.
 
 ### Usage:
 Edit minix source code in the `sources/task/usr` directory. Sync changes with the running machine using `sync_image.sh` script.
-If something went wrong, you can always create new image using [Creating new image](###Creating-new-image) section. 
+If something went wrong, you can always create new image using [Creating new image](###creating-new-image) section. 
