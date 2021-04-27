@@ -8,7 +8,7 @@ This is a template for minix tasks. Create new repository by clicking "Use this 
 1. Run `download_image.sh` script. This will create `/images/base_image` directory, download minix.img.xz from students.mimuw.edu.pl and decompress it.
 You may need to provide your password during this step.
 
-### Creating new image:
+### Creating new machine:
 1. Run `create_image.sh` script. This will create new `minix.img` in the `/images` directory. 
 Re-running this script always deletes previous image before creating a new one.
 1. Using another terminal run `start_machine.sh` script. This will run qemu machine.
@@ -16,7 +16,7 @@ Re-running this script always deletes previous image before creating a new one.
 If you don't have a ssh key, you may need to generate it using ssh-keygen.
 1. Run `sync_machine.sh` script to sync local `/usr` and `/tests` with the running machine.
 
-### Usage:
+### Usage, syncing and reinstalling:
 Edit minix source code in the `/sources/task/usr` directory and other programs in the `/tests` directory.
 Sync changes with the running machine using `sync_machine.sh` script. Install changes using `reinstall_machine.sh` script.
 If something went wrong, you can always create new image as in [Creating new image](#creating-new-image) section. 
