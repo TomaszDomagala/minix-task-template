@@ -24,4 +24,4 @@ done
 
 cd "${dir}/../sources" || fail "could not cd to /sources dir"
 
-diff -rupNEZbB ./original/usr/ ./task/usr/ > "../${username}.patch"
+diff -rupNEZbB original/usr/ task/usr/ > "../${username}.patch"
