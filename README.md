@@ -47,3 +47,5 @@ echo "Rebooting. You can exit with Ctrl+C"
 reboot
 EOF
 ```
+#### Footnote
+Workflow inspired by *LAB 1 minix_source.tar.xz* on the [SO2021 lab website](https://www.mimuw.edu.pl/~mb346851/SO2021/).
