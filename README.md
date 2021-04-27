@@ -28,10 +28,10 @@ Applying may fail if the running machine's files differ from original source.
 
 #### Notes:
 Minix sometimes crashes/freezes during ssh operations. 
-Memory limit can be inceased to reduce the likelihood of it by setting bigger value for `-m` flag in `qemu-system-x86_64` command inside `run_image.sh` script.
+Memory limit can be inceased to reduce the likelihood of it by setting bigger value for `-m` flag in `qemu-system-x86_64` command inside `start_machine.sh` script.
 
 
-You can edit `install_and_reboot.sh` script to remove some `make && make install` commands if the current task does not involve all of the directories.
+You can edit `reinstall_machine.sh` script to remove some `make && make install` commands if the current task does not involve all of the directories.
 ```bash
 
 ssh -p "${ssh_port}" root@localhost << EOF
