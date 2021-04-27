@@ -4,7 +4,7 @@ This is a template for minix tasks. Create new repository by clicking "Use this 
 
 ### Getting started:
 1. Go to the `/scripts` directory.
-1. In the `.config` file change `username=ab123456` to your student index.
+1. In the `.config` file change `username=ab123456` to your student index. This is used to access the students machine and for exporting the solution.
 1. Run `get_base_image.sh` script. This will create `/images/base_image` directory, download minix.img.xz from students.mimuw.edu.pl and decompress it.
 You may need to provide your password during this step.
 
