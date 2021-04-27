@@ -17,5 +17,6 @@ If you don't have a ssh key, you may need to generate it using ssh-keygen.
 1. Run `sync_image.sh` script to sync local `/usr` and `/tests` with the running machine.
 
 ### Usage:
-Edit minix source code in the `sources/task/usr` directory. Sync changes with the running machine using `sync_image.sh` script.
-If something went wrong, you can always create new image using [Creating new image](#creating-new-image) section. 
+Edit minix source code in the `/sources/task/usr` directory and other programs in the `/tests` directory.
+Sync changes with the running machine using `sync_image.sh` script.
+If something went wrong, you can always create new image as in [Creating new image](#creating-new-image) section. 
