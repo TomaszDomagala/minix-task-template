@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("ssh-copy-id" "ssh")
+commands=("diff")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,12 +22,6 @@ then
 fi
 done
 
-echo "setting up ssh key"
-ssh-copy-id root@localhost -p "${ssh_port}" || fail "could not copy ssh key"
+cd "${dir}/../sources" || fail "could not cd to /sources dir"
 
-echo "installing rsync"
-ssh root@localhost -p "${ssh_port}" "pkgin -y in rsync"
-
-echo "setup done"
-
-
+diff -rupNEZbB ./original/usr/ ./task/usr/ > "../${username}.patch"

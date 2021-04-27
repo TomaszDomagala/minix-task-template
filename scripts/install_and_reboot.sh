@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("ssh-copy-id" "ssh")
+commands=("ssh")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,12 +22,22 @@ then
 fi
 done
 
-echo "setting up ssh key"
-ssh-copy-id root@localhost -p "${ssh_port}" || fail "could not copy ssh key"
+ssh -p "${ssh_port}" root@localhost << EOF
+cd /usr/src
+make includes
+cd /usr/src/minix/fs/procfs
+make && make install
+cd /usr/src/minix/servers/pm
+make && make install
+cd /usr/src/minix/drivers/storage/ramdisk
+make && make install
+cd /usr/src/minix/drivers/storage/memory
+make && make install
+cd /usr/src/lib/libc
+make && make install
+cd /usr/src/releasetools
+make do-hdboot
 
-echo "installing rsync"
-ssh root@localhost -p "${ssh_port}" "pkgin -y in rsync"
-
-echo "setup done"
-
-
+echo "Rebooting. You can exit with Ctrl+C"
+reboot
+EOF
