@@ -18,5 +18,34 @@ If you don't have a ssh key, you may need to generate it using ssh-keygen.
 
 ### Usage:
 Edit minix source code in the `/sources/task/usr` directory and other programs in the `/tests` directory.
-Sync changes with the running machine using `sync_image.sh` script.
+Sync changes with the running machine using `sync_image.sh` script. Install changes using `install_and_reboot.sh` script.
 If something went wrong, you can always create new image as in [Creating new image](#creating-new-image) section. 
+
+To export `ab123456.patch` file use `export_solution.sh` script.
+
+#### Note:
+You can edit `install_and_reboot.sh` script to remove some `make && make install` commands if the current task does not involve all of the directories.
+```bash
+
+ssh -p "${ssh_port}" root@localhost << EOF
+cd /usr/src
+make includes
+cd /usr/src/minix/fs/procfs
+make && make install
+cd /usr/src/minix/servers/pm
+make && make install
+cd /usr/src/minix/drivers/storage/ramdisk
+make && make install
+cd /usr/src/minix/drivers/storage/memory
+make && make install
+cd /usr/src/lib/libc
+make && make install
+cd /usr/src/releasetools
+make do-hdboot
+
+echo "Rebooting. You can exit with Ctrl+C"
+reboot
+EOF
+```
+#### Footnote
+Workflow inspired by *LAB 1 minix_source.tar.xz* on the [SO2021 lab website](https://www.mimuw.edu.pl/~mb346851/SO2021/).
