@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("unxz" "scp")
+commands=("qemu-system-x86_64")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,15 +22,6 @@ then
 fi
 done
 
+cd "${dir}/../images" || fail "could not cd to /images dir"
 
-host="students.mimuw.edu.pl"
-path="/home/students/inf/PUBLIC/SO/scenariusze/4/minix.img.xz"
-
-mkdir -p "${dir}/../images/base_image"
-cd "${dir}/../images/base_image"
-
-echo "Downloading image..."
-scp "${username}@${host}:${path}" "." || fail "cannot download image"
-
-echo "Uncompressing image..."
-unxz -v "minix.img.xz" || fail "cannot uncompress image"
+qemu-system-x86_64 -curses -enable-kvm -drive file=minix.img -rtc base=localtime -net user,hostfwd=tcp::"${ssh_port}"-:22 -net nic,model=virtio -m 1024M

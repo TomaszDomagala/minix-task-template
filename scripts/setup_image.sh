@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("unxz" "scp")
+commands=("ssh-copy-id ssh")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,15 +22,12 @@ then
 fi
 done
 
+echo "setting up ssh key"
+ssh-copy-id root@localhost -p "${ssh_port}" || fail "could not copy ssh key"
 
-host="students.mimuw.edu.pl"
-path="/home/students/inf/PUBLIC/SO/scenariusze/4/minix.img.xz"
+echo "installing rsync"
+ssh root@localhost -p "${ssh_port}" "pkgin -y in rsync"
 
-mkdir -p "${dir}/../images/base_image"
-cd "${dir}/../images/base_image"
+echo "setup done"
 
-echo "Downloading image..."
-scp "${username}@${host}:${path}" "." || fail "cannot download image"
 
-echo "Uncompressing image..."
-unxz -v "minix.img.xz" || fail "cannot uncompress image"

@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("unxz" "scp")
+commands=("rsync")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,15 +22,11 @@ then
 fi
 done
 
+cd "${dir}/../sources/task" || fail "could not cd to /sources/task dir"
+rsync -uav -e "ssh -p ${ssh_port}" --exclude=".git" ./usr/include/ root@localhost:/usr/include/
+rsync -uav -e "ssh -p ${ssh_port}" --exclude=".git" ./usr/src/ root@localhost:/usr/src/
 
-host="students.mimuw.edu.pl"
-path="/home/students/inf/PUBLIC/SO/scenariusze/4/minix.img.xz"
+cd "${dir}/../"
+rsync -uav -e "ssh -p ${ssh_port}" --exclude=".git" ./tests root@localhost:/
 
-mkdir -p "${dir}/../images/base_image"
-cd "${dir}/../images/base_image"
-
-echo "Downloading image..."
-scp "${username}@${host}:${path}" "." || fail "cannot download image"
-
-echo "Uncompressing image..."
-unxz -v "minix.img.xz" || fail "cannot uncompress image"
+echo "sync done"

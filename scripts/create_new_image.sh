@@ -6,14 +6,13 @@ function fail {
     exit "${2-1}"  # Return a code specified by $2 or 1 by default.
 }
 
-
 # This script's directory.
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Read config file.
 . "${dir}/.config"
 
 # Required commands.
-commands=("unxz" "scp")
+commands=("qemu-img" "ssh-copy-id")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,15 +21,9 @@ then
 fi
 done
 
+img_dir="$(realpath ${dir}/../images)"
+cd "${img_dir}" || fail "could not cd to /images dir"
 
-host="students.mimuw.edu.pl"
-path="/home/students/inf/PUBLIC/SO/scenariusze/4/minix.img.xz"
-
-mkdir -p "${dir}/../images/base_image"
-cd "${dir}/../images/base_image"
-
-echo "Downloading image..."
-scp "${username}@${host}:${path}" "." || fail "cannot download image"
-
-echo "Uncompressing image..."
-unxz -v "minix.img.xz" || fail "cannot uncompress image"
+rm -f "minix.img"
+qemu-img create -f qcow2 -o backing_file="${img_dir}/base_image/minix.img" minix.img || fail "could not create image"
+echo "new image created"
