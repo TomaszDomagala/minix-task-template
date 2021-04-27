@@ -4,7 +4,7 @@ This is a template for minix tasks. Create new repository by clicking "Use this 
 
 ### Getting started:
 1. Go to the `/scripts` directory.
-1. In the `.config` file change `username=ab123456` to your student index.
+1. In the `.config` file change `username=ab123456` to your student index. This is used to access the students machine and for exporting the solution.
 1. Run `get_base_image.sh` script. This will create `/images/base_image` directory, download minix.img.xz from students.mimuw.edu.pl and decompress it.
 You may need to provide your password during this step.
 
@@ -23,7 +23,11 @@ If something went wrong, you can always create new image as in [Creating new ima
 
 To export `ab123456.patch` file use `export_solution.sh` script.
 
-#### Note:
+#### Notes:
+Minix sometimes crashes/freezes during ssh operations. 
+Memory limit can be inceased to reduce the likelihood of it by setting bigger value for `-m` flag in `qemu-system-x86_64` command inside `run_image.sh` script.
+
+
 You can edit `install_and_reboot.sh` script to remove some `make && make install` commands if the current task does not involve all of the directories.
 ```bash
 
