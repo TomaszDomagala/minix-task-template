@@ -28,5 +28,5 @@ if [[ ! -f "$file" ]]; then
     fail "could not find $file. use craete_patch.sh to generate .patch file"
 fi
 
-scp "$file" root@localhost:/ -p "$ssh_port" || fail "could not copy file to the machine"
-ssh root@localhost:/ -p "$ssh_port" "cd /; apply -p1 < $file" || "could not apply changes"
+scp -P "${ssh_port}" "./$file" "root@localhost:/" || fail "could not copy file to the machine"
+ssh -p "${ssh_port}" root@localhost "cd /; patch -p1 < $file" || "could not apply changes"
