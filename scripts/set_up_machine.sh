@@ -29,5 +29,3 @@ echo "installing rsync"
 ssh root@localhost -p "${ssh_port}" "pkgin -y in rsync"
 
 echo "setup done"
-
-
